@@ -24,7 +24,12 @@ const SearchBar = () => {
         if (query.length >= 3 && !isSelecting.current) {
             const fetchResults = async () => {
                 try {
-                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/students?search=${query}`);
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/students?search=${query}`,{
+                        headers : {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": process.env.DEPLOYMENT_API_URL,
+                        }
+                    });
                     setResults(response.data.result);
                     setShowDropdown(true);
                 } catch (error) {
